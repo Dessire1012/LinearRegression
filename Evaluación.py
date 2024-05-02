@@ -22,8 +22,11 @@ def main(datos_archivo, modelo_archivo):
         print(f"No se pudo encontrar el archivo '{datos_archivo}'")
         return
 
+    #li = ["Iowa", "Wisconsin", "Alabama", "Missouri", "Oklahoma"]
+    #housing = housing[housing.state.isin(li)]
+
     # Filtrar las columnas relevantes
-    housing = housing.filter(["price", "bed", "mean", "bath", "acre_lot", "house_size"])
+    housing = housing.filter(["price", "bed", "bath", "acre_lot", "house_size"])
 
     # Eliminar filas con valores faltantes
     housing = housing.dropna()
@@ -38,10 +41,6 @@ def main(datos_archivo, modelo_archivo):
     # Seleccionar columnas de características
     columnas_caracteristicas = ["bed", "bath", "acre_lot", "house_size"]
     X = housing[columnas_caracteristicas]
-
-    # Imputar valores faltantes en las columnas de características
-    imputer = SimpleImputer(strategy='median')
-    X = imputer.fit_transform(X)
 
     # Escalar características
     scaler = StandardScaler()

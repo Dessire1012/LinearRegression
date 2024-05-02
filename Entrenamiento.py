@@ -7,6 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import joblib
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 def remover_valores_atipicos(df, col):
     Q1 = df[col].quantile(0.25)
@@ -29,8 +31,11 @@ if __name__ == "__main__":
         print(f"No se pudo encontrar el archivo '{archivo_csv}'")
         sys.exit(1)
 
+    #li = ["Iowa", "Wisconsin", "Alabama", "Missouri", "Oklahoma"]
+    #housing = housing[housing.state.isin(li)]
+
     # Filtrar las columnas relevantes
-    housing = housing.filter(["price", "bed", "mean", "bath", "acre_lot", "house_size"])
+    housing = housing.filter(["price", "bed", "bath", "acre_lot", "house_size"])
 
     # Eliminar filas con valores faltantes
     housing = housing.dropna()
@@ -45,10 +50,6 @@ if __name__ == "__main__":
     # Seleccionar columnas de características
     columnas_caracteristicas = ["bed", "bath", "acre_lot", "house_size"]
     training_sample_df = housing[columnas_caracteristicas]
-
-    # Imputar valores faltantes en las columnas de características
-    imputer = SimpleImputer(strategy='median')
-    training_sample_df = imputer.fit_transform(training_sample_df)
 
     # Escalar características
     scaler = StandardScaler()
@@ -70,7 +71,7 @@ if __name__ == "__main__":
     mse = metrics.mean_squared_error(y_test, y_prediccion)
     rmse = np.sqrt(mse)
 
-    print('Precisión del modelo (R^2):', modelo.score(X_test, y_test))
+    print('\nPrecisión del modelo (R^2):', modelo.score(X_test, y_test))
     print('Error Absoluto Medio (MAE):', mae)
     print('Error Cuadrático Medio (MSE):', mse)
     print('Raíz del Error Cuadrático Medio (RMSE):', rmse)
@@ -78,4 +79,4 @@ if __name__ == "__main__":
     # Guardar el modelo entrenado en un archivo
     ruta_modelo_guardado = 'modelo_entrenado.pkl'
     joblib.dump(modelo, ruta_modelo_guardado)
-    print(f"Modelo entrenado guardado en '{ruta_modelo_guardado}'")
+    print(f"Modelo entrenado guardado en '{ruta_modelo_guardado}'\n")
