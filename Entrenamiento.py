@@ -76,4 +76,8 @@ if __name__ == "__main__":
     # Guardar el modelo entrenado en un archivo
     ruta_modelo_guardado = 'modelo_entrenado.pkl'
     joblib.dump(modelo, ruta_modelo_guardado)
+<<<<<<< HEAD
     print(f"Modelo entrenado guardado en '{ruta_modelo_guardado}'\n")
+=======
+    print(f"Modelo entrenado guardado en '{ruta_modelo_guardado}'")
+>>>>>>> 4a28ff3cccfbe7ac2e2218ce78cebe324584c53c
