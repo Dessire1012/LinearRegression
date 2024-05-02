@@ -23,7 +23,7 @@ def main(datos_archivo, modelo_archivo):
         return
 
     # Filtrar las columnas relevantes
-    housing = housing.filter(["price", "bed", "mean", "bath", "acre_lot", "house_size"])
+    housing = housing.filter(["price", "bed", "bath", "acre_lot", "house_size"])
 
     # Eliminar filas con valores faltantes
     housing = housing.dropna()
