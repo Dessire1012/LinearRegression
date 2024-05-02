@@ -1,21 +1,16 @@
 import sys
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
 import joblib
-
 
 def remover_valores_atipicos(df, col):
     Q1 = df[col].quantile(0.25)
     Q3 = df[col].quantile(0.75)
     IQR = Q3 - Q1
     return df[(df[col] >= Q1 - 1.5 * IQR) & (df[col] <= Q3 + 1.5 * IQR)]
-
 
 if __name__ == "__main__":
 
@@ -48,14 +43,6 @@ if __name__ == "__main__":
     # Seleccionar columnas de características
     columnas_caracteristicas = ["bed", "bath", "acre_lot", "house_size"]
     training_sample_df = housing[columnas_caracteristicas]
-
-    # Imputar valores faltantes en las columnas de características
-    imputer = SimpleImputer(strategy='median')
-    training_sample_df = imputer.fit_transform(training_sample_df)
-
-    # Escalar características
-    scaler = StandardScaler()
-    training_sample_df = scaler.fit_transform(training_sample_df)
 
     # Dividir los datos en conjuntos de entrenamiento y prueba
     X_train, X_test, y_train, y_test = train_test_split(training_sample_df, train_target_label, random_state=101,
