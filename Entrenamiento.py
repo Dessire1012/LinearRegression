@@ -17,7 +17,8 @@ def remover_valores_atipicos(df, col):
     return df[(df[col] >= Q1 - 1.5 * IQR) & (df[col] <= Q3 + 1.5 * IQR)]
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
+
     if len(sys.argv) != 2:
         print("Uso: py LinearRegressionGrapherScript.py <archivo_csv>")
         sys.exit(1)
