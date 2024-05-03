@@ -28,6 +28,9 @@ def main(datos_archivo, modelo_archivo):
     for col in ['price', 'bed', 'bath', 'acre_lot', 'house_size']:
         housing = remover_valores_atipicos(housing, col)
 
+    columnas_caracteristicas = ["bed", "bath", "acre_lot", "house_size"]
+    X = housing[columnas_caracteristicas]
+
     y = housing['price']
 
     scaler = StandardScaler()
