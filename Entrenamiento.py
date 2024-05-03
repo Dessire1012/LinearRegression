@@ -34,7 +34,7 @@ if __name__ == "__main__":
     housing = housing.dropna()
 
     # Remover valores atípicos en varias columnas
-    for col in ['bath', 'price', 'acre_lot', 'bed', 'house_size']:
+    for col in ['price', 'bed', 'bath', 'acre_lot', 'house_size']:
         housing = remover_valores_atipicos(housing, col)
 
     # Seleccionar las columnas necesarias
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # DIVISIÓN DE DATOS
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=101)
 
-    #ENTRENAMIENTO DEL MODELO
+    #ENTRENAMIENTO DEL MODELOjot
     modelo = LinearRegression()
     modelo.fit(X_train, y_train)
 

@@ -20,17 +20,13 @@ def main(datos_archivo, modelo_archivo):
         print(f"No se pudo encontrar el archivo '{datos_archivo}'")
         return
 
-
     #PROCESAMIENTO DE LOS DATOS
     housing = housing.filter(["price", "bed", "bath", "acre_lot", "house_size"])
 
     housing = housing.dropna()
 
-    for col in ['bath', 'price', 'acre_lot', 'bed', 'house_size']:
+    for col in ['price', 'bed', 'bath', 'acre_lot', 'house_size']:
         housing = remover_valores_atipicos(housing, col)
-
-    columnas_caracteristicas = ["bed", "bath", "acre_lot", "house_size"]
-    X = housing[columnas_caracteristicas]
 
     y = housing['price']
 
