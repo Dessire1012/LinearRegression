@@ -62,14 +62,12 @@ def main(datos_archivo, modelo_archivo):
     mse_test = mean_squared_error(y_test, predicciones_test)
     rmse_test = np.sqrt(mse_test)
 
-    # Mostrar las métricas de evaluación
     print(f'\nMAE en conjunto de prueba: {mae_test:.2f}')
     print(f'MSE en conjunto de prueba: {mse_test:.2f}')
     print(f'RMSE en conjunto de prueba: {rmse_test:.2f}')
 
     # Visualizar valores reales versus predicciones con colores distintos
     plt.figure(figsize=(12, 8))
-    # Limitar la cantidad de datos para la gráfica a los primeros 100 datos del conjunto de prueba
     num_datos = 100
     plt.scatter(y_test[:num_datos], predicciones_test[:num_datos], c='b', alpha=0.5, label='Predicciones')
     plt.plot(y_test[:num_datos], y_test[:num_datos], color='r', label='Valor Real')
@@ -87,11 +85,7 @@ def main(datos_archivo, modelo_archivo):
     ]
 
     ejemplos_prediccion_df = pd.DataFrame(ejemplos_prediccion, columns=columnas_caracteristicas)
-
-    # Ahora puedes escalar los datos sin problemas
     ejemplos_prediccion_scaled = scaler.transform(ejemplos_prediccion_df)
-
-    # El resto de tu código puede permanecer igual
     predicciones_ejemplos = modelo.predict(ejemplos_prediccion_scaled)
 
     print("\nPredicciones para ejemplos específicos:")
