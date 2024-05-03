@@ -21,9 +21,6 @@ def main(datos_archivo, modelo_archivo):
         print(f"No se pudo encontrar el archivo '{datos_archivo}'")
         return
 
-    #li = ["Iowa", "Wisconsin", "Alabama", "Missouri", "Oklahoma"]
-    #housing = housing[housing.state.isin(li)]
-
     # Filtrar las columnas relevantes
     housing = housing.filter(["price", "bed", "bath", "acre_lot", "house_size"])
 
@@ -66,7 +63,7 @@ def main(datos_archivo, modelo_archivo):
     rmse_test = np.sqrt(mse_test)
 
     # Mostrar las métricas de evaluación
-    print(f'MAE en conjunto de prueba: {mae_test:.2f}')
+    print(f'\nMAE en conjunto de prueba: {mae_test:.2f}')
     print(f'MSE en conjunto de prueba: {mse_test:.2f}')
     print(f'RMSE en conjunto de prueba: {rmse_test:.2f}')
 
@@ -81,6 +78,40 @@ def main(datos_archivo, modelo_archivo):
     plt.title("Valores Reales vs Predicciones (Conjunto de Prueba)")
     plt.legend()
     plt.show()
+
+    # Realizar predicciones sobre ejemplos específicos
+    ejemplos_prediccion = [
+        [3, 2.5, 0.3, 1800],
+        [4, 3.5, 0.45, 3200],
+        [5, 4, 0.72, 3600]
+    ]
+
+    ejemplos_prediccion_df = pd.DataFrame(ejemplos_prediccion, columns=columnas_caracteristicas)
+
+    # Ahora puedes escalar los datos sin problemas
+    ejemplos_prediccion_scaled = scaler.transform(ejemplos_prediccion_df)
+
+    # El resto de tu código puede permanecer igual
+    predicciones_ejemplos = modelo.predict(ejemplos_prediccion_scaled)
+
+    print("\nPredicciones para ejemplos específicos:")
+    for i, ejemplo in enumerate(ejemplos_prediccion):
+        print(f"Ejemplo {i + 1}: Características {ejemplo} -> Predicción de Precio: {predicciones_ejemplos[i]:.2f}")
+
+    precios_reales = [275000, 720000, 489000]
+
+    # Visualizar predicciones vs valores reales para ejemplos específicos
+    plt.figure(figsize=(12, 8))
+    plt.plot(range(1, 4), precios_reales, marker='o', linestyle='-', color='r', label='Valor Real')
+    plt.plot(range(1, 4), predicciones_ejemplos, marker='o', linestyle='--', color='b', label='Predicción')
+    plt.xlabel("Ejemplo")
+    plt.ylabel("Precio")
+    plt.title("Predicción vs Valor Real para Ejemplos Específicos")
+    plt.xticks(range(1, 4), ['Ejemplo 1', 'Ejemplo 2', 'Ejemplo 3'])
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Entrenamiento y evaluación de modelo de regresión')

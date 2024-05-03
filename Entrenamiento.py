@@ -1,10 +1,8 @@
 import sys
 import pandas as pd
-import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn import metrics
 import joblib
 
 def remover_valores_atipicos(df, col):
@@ -27,9 +25,6 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print(f"No se pudo encontrar el archivo '{archivo_csv}'")
         sys.exit(1)
-
-    #li = ["Iowa", "Wisconsin", "Alabama", "Missouri", "Oklahoma"]
-    #housing = housing[housing.state.isin(li)]
 
     # Filtrar las columnas relevantes
     housing = housing.filter(["price", "bed", "bath", "acre_lot", "house_size"])
@@ -60,24 +55,9 @@ if __name__ == "__main__":
     modelo = LinearRegression()
     modelo.fit(X_train, y_train)
 
-    # Evaluar el modelo con el conjunto de prueba
-    y_prediccion = modelo.predict(X_test)
-
-    # Calcular métricas de evaluación
-    mae = metrics.mean_absolute_error(y_test, y_prediccion)
-    mse = metrics.mean_squared_error(y_test, y_prediccion)
-    rmse = np.sqrt(mse)
-
-    print('\nPrecisión del modelo (R^2):', modelo.score(X_test, y_test))
-    print('Error Absoluto Medio (MAE):', mae)
-    print('Error Cuadrático Medio (MSE):', mse)
-    print('Raíz del Error Cuadrático Medio (RMSE):', rmse)
-
     # Guardar el modelo entrenado en un archivo
     ruta_modelo_guardado = 'modelo_entrenado.pkl'
     joblib.dump(modelo, ruta_modelo_guardado)
-<<<<<<< HEAD
     print(f"Modelo entrenado guardado en '{ruta_modelo_guardado}'\n")
-=======
     print(f"Modelo entrenado guardado en '{ruta_modelo_guardado}'")
->>>>>>> 4a28ff3cccfbe7ac2e2218ce78cebe324584c53c
+
